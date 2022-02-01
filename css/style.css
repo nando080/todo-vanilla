@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --primary: #984cf5;
+    --secondary: #aa77e6;
+    --highlight: #33f569;
+    --background: #ffffff;
+    --task-background: #fbfbfb;
+    --input-background: #f5f3f3;
+
+    --primary-text: #6d6d6d;
+    --secondary-text: #cccccc;
+
+    font-size: 10px;
+}
+
+.u-container {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 0;
+}
+
+
+/* HEADER */
+.l-header {
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
+}
+
+.l-header__container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.l-header__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.l-header__logo-icon {
+    width: 3rem;
+}
+
+.l-header__logo-title {
+    text-transform: uppercase;
+    font-weight: none;
+    color: var(--primary-text);
+}
+
+.l-header__filter {
+    display: flex;
+}
+
+.l-header__filter-options {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.l-header__filter-item {
+    font-size: 1.2rem;
+    color: var(--secondary-text);
+}
+
+.l-header__filter-item.is-active {
+    color: var(--secondary);
+}
+
+.l-header__filter-icon {
+    display: none;
+    /* display: inline-block; */
+    width: 2rem;
+    height: 2rem;
+    background-position: center;
+    background-size: cover;
+    background-image: url(/img/filter.svg);
+    transition: all ease-in .3s;
+    cursor: pointer;
+}
+
+.l-header__filter-icon:hover {
+    background-image: url(/img/filter-active.svg);
+}
+
+.c-add-task {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.c-add-task__input {
+    width: 90%;
+    height: 5rem;
+    border: none;
+    outline: none;
+    border-radius: .5rem 0 0 .5rem;
+    background-color: var(--input-background);
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    color: var(--primary-text);
+}
+
+.c-add-task__input::placeholder {
+    color: var(--secondary-text);
+}
+
+.c-add-task__button {
+    width: 10%;
+    height: 5rem;
+    border: none;
+    border-radius: 0 1rem 1rem 0;
+    background-color: var(--secondary);
+    cursor: pointer;
+    transition: all ease-in .3s;
+}
+
+.c-add-task__button:hover {
+    background-color: var(--primary);
+}
+
+.c-add-task__button-icon {
+    width: 2.5rem;
+    transform: translateY(.15rem);
+}
