@@ -8,6 +8,16 @@
     font-family: 'Poppins', sans-serif;
 }
 
+@keyframes opentop {
+    from {transform: rotateX(90deg);}
+    to {transform: rotateX(0deg);}
+}
+
+@keyframes closetop {
+    from {transform: rotateX(0deg);}
+    to {transform: rotateX(90deg);}
+}
+
 :root {
     --primary: #984cf5;
     --secondary: #aa77e6;
@@ -26,7 +36,7 @@
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
-    padding: 3rem 0;
+    padding: 0 3rem;
 }
 
 
@@ -69,6 +79,7 @@
 
 .l-header__filter {
     display: flex;
+    position: relative;
 }
 
 .l-header__filter-options {
@@ -79,6 +90,7 @@
 .l-header__filter-item {
     font-size: 1.2rem;
     color: var(--secondary-text);
+    cursor: pointer;
 }
 
 .l-header__filter-item.is-active {
@@ -88,8 +100,8 @@
 .l-header__filter-icon {
     display: none;
     /* display: inline-block; */
-    width: 2rem;
-    height: 2rem;
+    width: 1.6rem;
+    height: 1.2rem;
     background-position: center;
     background-size: cover;
     background-image: url(/img/filter.svg);
