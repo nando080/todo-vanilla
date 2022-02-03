@@ -29,6 +29,8 @@
     --primary-text: #6d6d6d;
     --secondary-text: #cccccc;
 
+    --task-shadow: 2px 2px 5px rgb(152, 76, 245, .15);
+
     font-size: 10px;
 }
 
@@ -153,4 +155,92 @@
 .c-add-task__button-icon {
     width: 2.5rem;
     transform: translateY(.15rem);
+}
+
+/* TASKS */
+.c-task {
+    margin-top: 17rem;
+}
+
+.c-task__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.c-task__item {
+    width: 100%;
+    min-height: 5rem;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    border-radius: .5rem;
+    background-color: var(--task-background);
+    box-shadow: var(--task-shadow);
+}
+
+.c-task__check {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: .15rem solid var(--primary-text);
+    border-radius: .3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background);
+    cursor: pointer;
+    transition: all ease .3s;
+}
+
+.c-task__check:hover,
+.c-task__check.is-finished:hover {
+    border-color: var(--secondary);
+}
+
+.c-task__check.is-finished {
+    border-color: var(--highlight);
+}
+
+.c-task__check-icon {
+    display: none;
+    width: 1.1rem;
+}
+
+.c-task__check-icon.is-finished {
+    display: block;
+}
+
+.c-task__message-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.c-task__message {
+    color: var(--primary);
+    font-size: 1.9rem;
+}
+
+.c-task__message.is-finished {
+    color: var(--secondary-text);
+    text-decoration: line-through;
+}
+
+.c-task__close-button {
+    display: inline-block;
+    width: 1.8rem;
+    height:1.8rem;
+    background-image: url(/img/close.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: auto;
+    transition: all ease .35s;
+    cursor: pointer;
+}
+
+.c-task__close-button:hover {
+    background-image: url(/img/close-active.svg);
+    transform: rotate(180deg);
 }
