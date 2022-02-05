@@ -56,4 +56,12 @@
         margin-top: 11rem;
     }
 
+    .c-add-task-button {
+        display: flex;
+    }
+
+    .c-add-task-modal.is-active {
+        display: flex;
+    }
+
 }

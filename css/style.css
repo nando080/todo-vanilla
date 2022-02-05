@@ -24,12 +24,12 @@
     --highlight: #33f569;
     --background: #ffffff;
     --task-background: #fbfbfb;
-    --input-background: #f5f3f3;
+    --input-background: #f3f3f3;
 
     --primary-text: #6d6d6d;
     --secondary-text: #cccccc;
 
-    --task-shadow: 2px 2px 5px rgb(152, 76, 245, .15);
+    --task-shadow: 2px 2px 5px rgb(152, 76, 245, .2);
 
     font-size: 10px;
 }
@@ -243,4 +243,109 @@
 .c-task__close-button:hover {
     background-image: url(/img/close-active.svg);
     transform: rotate(180deg);
+}
+
+
+/* ADD TASK BUTTON */
+.c-add-task-button {
+    width: 5rem;
+    height: 5rem;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 3rem;
+    right: 3rem;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--secondary);
+    z-index: 200;
+    transition: all ease-in-out .3s;
+    cursor: pointer;
+}
+
+.c-add-task-button:hover {
+    background-color: var(--primary);
+    transform: rotate(90deg);
+}
+
+.c-add-task-button__icon {
+    width: 2.5rem;
+}
+
+
+/* ADD TASK MODAL */
+.c-add-task-modal {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .8);
+    z-index: 300;
+    padding: 1.5rem;
+}
+
+.c-add-task-modal__container {
+    width: 100%;
+    max-width: 30rem;
+    text-align: center;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    background-color: var(--task-background);
+    border: 1px solid rgba(170, 119, 230, .35);
+    box-shadow: var(--task-shadow);
+}
+
+.c-add-task-modal__title {
+    color: var(--primary);
+    font-weight: none;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.c-add-task-modal__text-area {
+    margin-bottom: 1.5rem;
+    border: none;
+    outline: none;
+    padding: 1rem;
+    color: var(--primary-text);
+}
+
+.c-add-task-modal__text-area::placeholder {
+    color: var(--secondary-text);
+}
+
+.c-add-task-modal__button {
+    width: 9.5rem;
+    padding: .5rem;
+    border: none;
+    border-radius: .5rem;
+    background-color: var(--input-background);
+    color: var(--primary-text);
+    cursor: pointer;
+    transition: all ease .3s;
+}
+
+.c-add-task-modal__button:hover {
+    transform: scale(.98)
+}
+
+.c-add-task-modal__button + .c-add-task-modal__button {
+    margin-left: 2rem;
+}
+
+.c-add-task-modal__button.c-add-task-modal__button--primary {
+    background-color: var(--secondary);
+    color: var(--background);
+}
+
+.c-add-task-modal__button.c-add-task-modal__button--primary:hover {
+    background-color: var(--primary);
 }
