@@ -30,12 +30,24 @@ const isLocalStorageEmpty = () => {
 }
 
 const updateLocalStorage = () => {
+    localStorage.removeItem('tasks')
     localStorage.setItem('tasks', JSON.stringify(tasks))
 }
 
 const clearAddTaskInput = () => {
     addTaskInputEl.value = ''
     addTaskInputEl.focus()
+}
+
+//TODO finalizar
+const removeTask = event => {
+    const taskID = event.target.dataset.id
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i]) {
+
+        }
+    }
+    console.log(taskID)
 }
 
 const createTaskElement = ({id, isFinished, content}) => {
@@ -49,15 +61,17 @@ const createTaskElement = ({id, isFinished, content}) => {
     const taskCheckIcon = document.createElement('img')
     taskCheckIcon.setAttribute('class', `c-task__check-icon${isFinishedClass}`)
     taskCheckIcon.src = 'img/check.svg'
-    taskCheck.appendChild(taskCheckIcon)
     const taskMessageContainer = document.createElement('div')
     taskMessageContainer.classList.add('c-task__message-container')
     const taskMessage = document.createElement('p')
     taskMessage.setAttribute('class', `c-task__message${isFinishedClass}`)
     taskMessage.textContent = content
-    taskMessageContainer.appendChild(taskMessage)
     const taskCloseButton = document.createElement('div')
     taskCloseButton.classList.add('c-task__close-button')
+    taskCloseButton.dataset.id = id
+    taskCloseButton.addEventListener('click', removeTask)
+    taskCheck.appendChild(taskCheckIcon)
+    taskMessageContainer.appendChild(taskMessage)
     taskItem.appendChild(taskCheck)
     taskItem.appendChild(taskMessageContainer)
     taskItem.appendChild(taskCloseButton)
@@ -65,9 +79,27 @@ const createTaskElement = ({id, isFinished, content}) => {
     return taskItem
 }
 
+const clearTasksArray = () => {
+    while (tasks.length > 0) {
+        tasks.pop()
+    }
+}
+
+const getTasks = () => {
+    if (!isLocalStorageEmpty()) {
+        clearTasksArray()
+        const localStorageTasks = JSON.parse(localStorage.tasks)
+        localStorageTasks.forEach(task => {
+            tasks.push(task)
+        })
+    }
+    console.log(tasks)
+}
+
 const renderTasks = () => {
-    if (tasks.length !== 0) {
+    if (tasks.length !== 0 && !isLocalStorageEmpty()) {
         taskListEl.innerHTML = ''
+        getTasks()
         tasks.forEach(task => {
             taskListEl.appendChild(createTaskElement(task))
         })
@@ -79,12 +111,12 @@ const addTask = task => {
     console.log(isLocalStorageEmpty())
     if (isLocalStorageEmpty()) {
         currentTask = {
-            id: 0,
+            id: 1,
             content: task,
-            isFinished: true
+            isFinished: false
         }
     } else {
-        const currentIndex = tasks.length
+        const currentIndex = tasks[tasks.length - 1].id + 1
         currentTask = {
             id: currentIndex,
             content: task,
@@ -105,4 +137,7 @@ addTaskInputButtonEl.addEventListener('click', () => {
     }
 })
 
-console.log(getLocalStorageTasks());
+window.addEventListener('load', () => {
+    getTasks()
+    renderTasks()
+})
