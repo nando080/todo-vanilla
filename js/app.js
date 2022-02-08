@@ -42,11 +42,25 @@ const clearAddTaskInput = () => {
 }
 
 const removeTask = event => {
-    const taskID = Number(event.target.dataset.id)
+    const targetID = Number(event.target.dataset.id)
     for (let i = 0; i < tasks.length; i++) {
-        console.log(taskID, tasks[i].id)
-        if (tasks[i].id === taskID) {
+        if (tasks[i].id === targetID) {
             tasks.splice(i, 1)
+            updateLocalStorage()
+            renderTasks()
+        }
+    }
+}
+
+const finalizeTask = event => {
+    const targetID = Number(event.target.dataset.id)
+    for (let i = 0; i < tasks.length; i++) {
+        if(tasks[i].id === targetID) {
+            if (tasks[i].isFinished) {
+                tasks[i].isFinished = false
+            } else {
+                tasks[i].isFinished = true
+            }
             updateLocalStorage()
             renderTasks()
         }
@@ -55,23 +69,33 @@ const removeTask = event => {
 
 const createTaskElement = ({id, isFinished, content}) => {
     const isFinishedClass = isFinished ? ' is-finished' : ''
+   
     const taskItem = document.createElement('li')
     taskItem.classList.add('c-task__item')
     taskItem.dataset.id = id
+    
     const taskCheck = document.createElement('div')
     taskCheck.setAttribute('class', `c-task__check${isFinishedClass}`)
+    taskCheck.dataset.id = id
+    taskCheck.addEventListener('click', finalizeTask)
+   
     const taskCheckIcon = document.createElement('img')
     taskCheckIcon.setAttribute('class', `c-task__check-icon${isFinishedClass}`)
+    taskCheckIcon.dataset.id = id
     taskCheckIcon.src = 'img/check.svg'
+  
     const taskMessageContainer = document.createElement('div')
     taskMessageContainer.classList.add('c-task__message-container')
+    
     const taskMessage = document.createElement('p')
     taskMessage.setAttribute('class', `c-task__message${isFinishedClass}`)
     taskMessage.textContent = content
+   
     const taskCloseButton = document.createElement('div')
     taskCloseButton.classList.add('c-task__close-button')
     taskCloseButton.dataset.id = id
     taskCloseButton.addEventListener('click', removeTask)
+    
     taskCheck.appendChild(taskCheckIcon)
     taskMessageContainer.appendChild(taskMessage)
     taskItem.appendChild(taskCheck)
