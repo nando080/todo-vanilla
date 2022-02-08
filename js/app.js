@@ -3,6 +3,11 @@ const filterOptionsEl = document.querySelector('.l-header__filter-options')
 const addTaskInputEl = document.querySelector('.c-add-task__input')
 const addTaskInputButtonEl = document.querySelector('.c-add-task__button')
 const taskListEl = document.querySelector('.c-task__list')
+const addTaskModalButtonEl = document.querySelector('.c-add-task-button')
+const addTaskModalEl = document.querySelector('.c-add-task-modal')
+const addTaskModalTextAreaEl = document.querySelector('.c-add-task-modal__text-area')
+const addTaskModalCancelButtonEl = document.querySelector('[data-js="cancel"]')
+const addTaskModalSaveButtonEl = document.querySelector('[data-js="save"]')
 
 const tasks = []
 
@@ -86,6 +91,7 @@ const createTaskElement = ({id, isFinished, content}) => {
   
     const taskMessageContainer = document.createElement('div')
     taskMessageContainer.classList.add('c-task__message-container')
+    taskMessageContainer.dataset.id = id
     
     const taskMessage = document.createElement('p')
     taskMessage.setAttribute('class', `c-task__message${isFinishedClass}`)
@@ -153,6 +159,33 @@ const addTask = task => {
     renderTasks()
 }
 
+const updateTask = (newTask, id) => {
+    const taskID = Number(id)
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === taskID) {
+            tasks[i].content = newTask
+        }
+    }
+}
+
+const closeTaskModal = () => {
+    addTaskModalTextAreaEl.value
+    addTaskModalEl.classList.remove('is-active')
+}
+
+const showTaskModal = (action = 'new', message = '', id = 0) => {
+    addTaskModalEl.classList.add('is-active')
+    if (action === 'new') {
+        addTaskModalSaveButtonEl.addEventListener('click', () => {
+            if (addTaskModalTextAreaEl.value !== '') {
+                addTask(addTaskModalTextAreaEl.value)
+                addTaskModalTextAreaEl.value = ''
+                closeTaskModal()
+            }
+        })
+    }
+}
+
 filterButtonEl.addEventListener('click', activeFilterOptions)
 
 addTaskInputButtonEl.addEventListener('click', () => {
@@ -166,6 +199,10 @@ document.addEventListener('keypress', event => {
         addTask(addTaskInputEl.value)
     } 
 })
+
+addTaskModalButtonEl.addEventListener('click', showTaskModal)
+
+addTaskModalCancelButtonEl.addEventListener('click', closeTaskModal)
 
 window.addEventListener('load', () => {
     getTasks()
