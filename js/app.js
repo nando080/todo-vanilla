@@ -31,7 +31,9 @@ const isLocalStorageEmpty = () => {
 
 const updateLocalStorage = () => {
     localStorage.removeItem('tasks')
-    localStorage.setItem('tasks', JSON.stringify(tasks))
+    if (tasks.length > 0) {
+        localStorage.setItem('tasks', JSON.stringify(tasks))
+    }
 }
 
 const clearAddTaskInput = () => {
@@ -39,20 +41,20 @@ const clearAddTaskInput = () => {
     addTaskInputEl.focus()
 }
 
-//TODO finalizar
 const removeTask = event => {
-    const taskID = event.target.dataset.id
+    const taskID = Number(event.target.dataset.id)
     for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i]) {
-
+        console.log(taskID, tasks[i].id)
+        if (tasks[i].id === taskID) {
+            tasks.splice(i, 1)
+            updateLocalStorage()
+            renderTasks()
         }
     }
-    console.log(taskID)
 }
 
 const createTaskElement = ({id, isFinished, content}) => {
     const isFinishedClass = isFinished ? ' is-finished' : ''
-    console.log(id, isFinished, content);
     const taskItem = document.createElement('li')
     taskItem.classList.add('c-task__item')
     taskItem.dataset.id = id
@@ -93,12 +95,11 @@ const getTasks = () => {
             tasks.push(task)
         })
     }
-    console.log(tasks)
 }
 
 const renderTasks = () => {
+    taskListEl.innerHTML = ''
     if (tasks.length !== 0 && !isLocalStorageEmpty()) {
-        taskListEl.innerHTML = ''
         getTasks()
         tasks.forEach(task => {
             taskListEl.appendChild(createTaskElement(task))
@@ -108,7 +109,6 @@ const renderTasks = () => {
 
 const addTask = task => {
     let currentTask
-    console.log(isLocalStorageEmpty())
     if (isLocalStorageEmpty()) {
         currentTask = {
             id: 1,
@@ -135,6 +135,12 @@ addTaskInputButtonEl.addEventListener('click', () => {
     if (addTaskInputEl.value !== '') {
         addTask(addTaskInputEl.value)
     }
+})
+
+document.addEventListener('keypress', event => {
+    if(event.key === 'Enter' && addTaskInputEl.value !== '') {
+        addTask(addTaskInputEl.value)
+    } 
 })
 
 window.addEventListener('load', () => {
