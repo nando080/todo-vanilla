@@ -204,6 +204,13 @@ addTaskModalButtonEl.addEventListener('click', showTaskModal)
 
 addTaskModalCancelButtonEl.addEventListener('click', closeTaskModal)
 
+addTaskModalSaveButtonEl.addEventListener('click', () => {
+    if (addTaskModalTextAreaEl.value !== '') {
+        addTask(addTaskModalTextAreaEl.value)
+        closeTaskModal()
+    }
+})
+
 window.addEventListener('load', () => {
     getTasks()
     renderTasks()

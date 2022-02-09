@@ -106,13 +106,13 @@
     height: 1.2rem;
     background-position: center;
     background-size: cover;
-    background-image: url(/img/filter.svg);
+    background-image: url(../img/filter.svg);
     transition: all ease-in .3s;
     cursor: pointer;
 }
 
 .l-header__filter-icon:hover {
-    background-image: url(/img/filter-active.svg);
+    background-image: url(../img/filter-active.svg);
 }
 
 .c-add-task {
@@ -155,6 +155,11 @@
 .c-add-task__button-icon {
     width: 2.5rem;
     transform: translateY(.15rem);
+    transition: all ease .2s;
+}
+
+.c-add-task__button:hover > .c-add-task__button-icon {
+    transform: translateY(.15rem) scale(.85);
 }
 
 /* TASKS */
@@ -233,7 +238,7 @@
     display: inline-block;
     width: 1.8rem;
     height:1.8rem;
-    background-image: url(/img/close.svg);
+    background-image: url(../img/close.svg);
     background-position: center;
     background-repeat: no-repeat;
     margin-left: auto;
@@ -242,7 +247,7 @@
 }
 
 .c-task__close-button:hover {
-    background-image: url(/img/close-active.svg);
+    background-image: url(../img/close-active.svg);
     transform: rotate(180deg);
 }
 
