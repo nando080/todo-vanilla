@@ -138,20 +138,10 @@ const renderTasks = () => {
 }
 
 const addTask = task => {
-    let currentTask
-    if (isLocalStorageEmpty()) {
-        currentTask = {
-            id: 1,
-            content: task,
-            isFinished: false
-        }
-    } else {
-        const currentIndex = tasks[tasks.length - 1].id + 1
-        currentTask = {
-            id: currentIndex,
-            content: task,
-            isFinished: false
-        }
+    let currentTask = {
+        id: (isLocalStorageEmpty() ? 1 : tasks[tasks.length - 1].id + 1),
+        content: task,
+        isFinished: false
     }
     tasks.push(currentTask)
     updateLocalStorage()
@@ -169,7 +159,7 @@ const updateTask = (newTask, id) => {
 }
 
 const closeTaskModal = () => {
-    addTaskModalTextAreaEl.value
+    addTaskModalTextAreaEl.textContent = ''
     addTaskModalEl.classList.remove('is-active')
 }
 
@@ -177,9 +167,8 @@ const showTaskModal = (action = 'new', message = '', id = 0) => {
     addTaskModalEl.classList.add('is-active')
     if (action === 'new') {
         addTaskModalSaveButtonEl.addEventListener('click', () => {
-            if (addTaskModalTextAreaEl.value !== '') {
-                addTask(addTaskModalTextAreaEl.value)
-                addTaskModalTextAreaEl.value = ''
+            if (addTaskModalTextAreaEl.textContent !== '') {
+                addTask(addTaskModalTextAreaEl.textContent)
                 closeTaskModal()
             }
         })
