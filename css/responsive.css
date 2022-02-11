@@ -44,6 +44,10 @@
         color: var(--highlight);
     }
 
+    .c-add-task-modal {
+        padding: 1.5rem 3rem;
+    }
+
 }
 
 @media (max-width: 450px) {
@@ -57,10 +61,6 @@
     }
 
     .c-add-task-button {
-        display: flex;
-    }
-
-    .c-add-task-modal.is-active {
         display: flex;
     }
 
