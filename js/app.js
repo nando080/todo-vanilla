@@ -1,28 +1,25 @@
 const filterButtonEl = document.querySelector('.l-header__filter-icon')
-const filterOptionsEl = document.querySelector('.l-header__filter-options')
+const filterOptionsContainerEl = document.querySelector('.l-header__filter-options')
+const filterOptionsEl = document.querySelectorAll('.l-header__filter-item')
 const addTaskInputEl = document.querySelector('.c-add-task__input')
 const addTaskInputButtonEl = document.querySelector('.c-add-task__button')
 const taskListEl = document.querySelector('.c-task__list')
 const addTaskModalButtonEl = document.querySelector('.c-add-task-button')
-/* const addTaskModalEl = document.querySelector('.c-add-task-modal')
-const addTaskModalTextAreaEl = document.querySelector('.c-add-task-modal__text-area')
-const addTaskModalCancelButtonEl = document.querySelector('[data-js="cancel"]')
-const addTaskModalSaveButtonEl = document.querySelector('[data-js="save"]') */
 
 const tasks = []
 
 const activeFilterOptions = () => {
-    const condition = !filterOptionsEl.classList.contains('is-active')
+    const condition = !filterOptionsContainerEl.classList.contains('is-active')
     if (condition) {
-        filterOptionsEl.classList.add('is-opened')
-        filterOptionsEl.classList.add('is-active')
+        filterOptionsContainerEl.classList.add('is-opened')
+        filterOptionsContainerEl.classList.add('is-active')
         return
     }
-    filterOptionsEl.classList.remove('is-opened')
-    filterOptionsEl.classList.add('is-closed')
+    filterOptionsContainerEl.classList.remove('is-opened')
+    filterOptionsContainerEl.classList.add('is-closed')
     const interval = setTimeout(() => {
-        filterOptionsEl.classList.remove('is-closed')
-        filterOptionsEl.classList.remove('is-active')
+        filterOptionsContainerEl.classList.remove('is-closed')
+        filterOptionsContainerEl.classList.remove('is-active')
     }, 1000)
 }
 
@@ -121,6 +118,24 @@ const renderTasks = () => {
     }
 }
 
+const renderFilteredTasks = filter => {
+    if (!isLocalStorageEmpty()) {
+        taskListEl.innerHTML = ''
+        getTasks()
+        const filteredTasks = tasks.filter(task => {
+            if (filter === 'finished') {
+                return task.isFinished
+            }
+            if (filter === 'unfinished') {
+                return !task.isFinished
+            }
+        })
+        filteredTasks.forEach(task => {
+            taskListEl.appendChild(createTaskElement(task))
+        })
+    }
+}
+
 const createTaskElement = ({ id, isFinished, content }) => {
     const isFinishedClass = isFinished ? ' is-finished' : ''
 
@@ -171,8 +186,6 @@ const closeTaskModal = () => {
     body.removeChild(modal)
     clearAddTaskInput()
 }
-
-//TODO COMPLETE FUNCTION
 
 const modalSaveHandle = (action, taskContent, currentID) => {
     if (action === 'new' && taskContent !== '') {
@@ -243,6 +256,12 @@ const showTaskModal = (currentAction = 'new', currentContent = '', currentID = 0
     body.appendChild(createAddTaskModal(currentAction, currentContent, currentID))
 }
 
+const clearActiveFilterButtons = () => {
+    filterOptionsEl.forEach(button => {
+        button.classList.remove('is-active')
+    })
+}
+
 filterButtonEl.addEventListener('click', activeFilterOptions)
 
 addTaskInputButtonEl.addEventListener('click', () => {
@@ -259,6 +278,24 @@ document.addEventListener('keypress', event => {
 
 addTaskModalButtonEl.addEventListener('click', () => {
     showTaskModal()
+})
+
+
+filterOptionsEl.forEach(button => {
+    button.addEventListener('click', event => {
+        const optionType = event.target.dataset.js
+        const isFilterActive = event.target.classList.contains('is-active')
+        if (isFilterActive) {
+            clearActiveFilterButtons()
+            renderTasks()
+            activeFilterOptions()
+            return
+        }
+        clearActiveFilterButtons()
+        event.target.classList.add('is-active')
+        renderFilteredTasks(optionType)
+        activeFilterOptions()
+    })
 })
 
 window.addEventListener('load', () => {
