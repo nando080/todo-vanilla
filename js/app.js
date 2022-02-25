@@ -182,9 +182,17 @@ const createTaskElement = ({ id, isFinished, content }) => {
 
 const closeTaskModal = () => {
     const body = document.querySelector('body')
-    const modal = body.querySelector('.c-add-task-modal')
-    body.removeChild(modal)
+    const taskModal = document.querySelector('.c-add-task-modal')
+    const taskModalContainer = document.querySelector('.c-add-task-modal__container')
+    console.log(body, taskModal, taskModalContainer)
+    taskModalContainer.classList.add('hide')
+    taskModal.classList.add('hide')
+    const interval = setTimeout(() => {
+        taskModal.remove()
+        body.classList.remove('is-blocked')
+    }, 900)
     clearAddTaskInput()
+    return
 }
 
 const modalSaveHandle = (action, taskContent, currentID) => {
@@ -204,10 +212,10 @@ const modalSaveHandle = (action, taskContent, currentID) => {
 const createAddTaskModal = (action, updateContent, currentID) => {
 
     const addTaskModal = document.createElement('div')
-    addTaskModal.classList.add('c-add-task-modal')
+    addTaskModal.setAttribute('class', 'c-add-task-modal show')
 
     const addTaskModalContainer = document.createElement('div')
-    addTaskModalContainer.classList.add('c-add-task-modal__container')
+    addTaskModalContainer.setAttribute('class', 'c-add-task-modal__container show')
 
     const addTaskModalTitle = document.createElement('h2')
     addTaskModalTitle.classList.add('c-add-task-modal__title')
@@ -253,7 +261,13 @@ const createAddTaskModal = (action, updateContent, currentID) => {
 
 const showTaskModal = (currentAction = 'new', currentContent = '', currentID = 0) => {
     const body = document.querySelector('body')
-    body.appendChild(createAddTaskModal(currentAction, currentContent, currentID))
+    const newModal = createAddTaskModal(currentAction, currentContent, currentID)
+    body.appendChild(newModal)
+    body.classList.add('is-blocked')
+    const interval = setTimeout(() => {
+        document.querySelector('.c-add-task-modal__container').classList.remove('show')
+        document.querySelector('.c-add-task-modal').classList.remove('show')
+    }, 1000)
 }
 
 const clearActiveFilterButtons = () => {

@@ -18,6 +18,23 @@
     to {transform: rotateX(90deg);}
 }
 
+@keyframes showopacity {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes showtranslate {
+    0% {transform: translateY(-100vh);}
+    50% {transform: translateY(5vh);}
+    75% {transform: translateY(-5vh);}
+    100% {transform: translateY(0);}
+}
+
+@keyframes hidetranslate {
+    from {transform: translateY(0);}
+    to {transform: translateY(-100vh);}
+}
+
 :root {
     --primary: #984cf5;
     --secondary: #aa77e6;
@@ -41,17 +58,24 @@
     padding: 0 3rem;
 }
 
+body.is-blocked {
+    overflow: hidden;
+}
+
 
 /* HEADER */
 .l-header {
     position: fixed;
-    top: 3rem;
+    top: 0rem;
     left: 0;
     right: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 3rem;
+    padding-bottom: 1.5rem;
     z-index: 100;
+    background-color: var(--background);
 }
 
 .l-header__container {
@@ -290,7 +314,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -300,8 +324,17 @@
     padding: 1.5rem;
 }
 
-.c-add-task-modal.is-active {
-    display: flex;
+.c-add-task-modal.show {
+    animation-name: showopacity;
+    animation-duration: .5s;
+}
+
+.c-add-task-modal.hide {
+    animation-name: showopacity;
+    animation-duration: .5s;
+    animation-delay: .5s;
+    animation-direction: reverse;
+    animation-fill-mode: forwards;
 }
 
 .c-add-task-modal__container {
@@ -313,6 +346,21 @@
     background-color: var(--task-background);
     border: 1px solid rgba(170, 119, 230, .35);
     box-shadow: var(--task-shadow);
+}
+
+.c-add-task-modal__container.show {
+    animation-name: showtranslate;
+    animation-duration: .5s;
+    animation-delay: .5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: backwards;
+}
+
+.c-add-task-modal__container.hide {
+    animation-name: hidetranslate;
+    animation-duration: .5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
 }
 
 .c-add-task-modal__title {
